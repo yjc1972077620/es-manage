@@ -1,0 +1,58 @@
+/**
+ * 全局样式
+ */
+
+@import "tailwindcss";
+
+/* 自定义滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+/* Ant Design 侧边栏菜单样式覆盖 */
+.ant-menu-dark {
+  background: transparent !important;
+}
+
+.ant-menu-dark .ant-menu-item-selected {
+  background-color: rgba(0, 107, 180, 0.3) !important;
+}
+
+.ant-menu-dark .ant-menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 卡片阴影 */
+.ant-card {
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+}
+
+/* 表格行悬停效果 */
+.ant-table-tbody > tr:hover > td {
+  background-color: #f5f7fa !important;
+}
+
+/* 进度条动画 */
+.ant-progress-line {
+  transition: all 0.3s ease;
+}
+
+/* 统计数字样式 */
+.ant-statistic-content-value {
+  font-weight: 600;
+}
