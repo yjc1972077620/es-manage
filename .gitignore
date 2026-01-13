@@ -1,24 +1,31 @@
-# Logs
-logs
+# 前端项目忽略文件
+es-manage-web/node_modules/
+es-manage-web/dist/
+es-manage-web/.env
+es-manage-web/.env.local
+es-manage-web/.env.development.local
+es-manage-web/.env.test.local
+es-manage-web/.env.production.local
+
+# 后端项目忽略文件
+es-manage-service/.gradle/
+es-manage-service/build/
+es-manage-service/target/
+es-manage-service/.idea/
+es-manage-service/*.iml
+es-manage-service/*.ipr
+es-manage-service/*.iws
+
+# 通用忽略文件
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+*.tmp
+*.temp
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+Thumbs.db
+
+# IDE 配置文件
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~

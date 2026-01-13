@@ -1,0 +1,27 @@
+server:
+  port: 8080
+
+# Kibana 配置
+kibana:
+  # Kibana 服务地址
+  base-url: http://192.168.4.239:5601
+  # 集群 ID
+  cluster-id: rMzxGfB1TfibGYna-UIIzQ
+  # 认证信息
+  username: elastic
+  password: 123456
+  # Kibana 版本信息
+  version: 8.18.0
+  build-number: 82976
+
+# 跨域配置
+cors:
+  allowed-origins: http://localhost:5173,http://localhost:3000
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  allowed-headers: "*"
+
+# 日志配置
+logging:
+  level:
+    com.esmanage: DEBUG
+    okhttp3: INFO

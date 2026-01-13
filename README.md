@@ -1,113 +1,88 @@
-# ES Monitor Web (Kiro)
+# ES Monitor Web 项目
 
-Elasticsearch 监控平台 - 类似 Kibana 监控界面的 1:1 还原项目
+ES Monitor Web 是一个专为 Elasticsearch 集群设计的监控管理平台，提供全方位的集群监控、智能告警、审批流程和自动化操作流功能。
+
+## 项目结构
+
+```
+es-manage/
+├── es-manage-web/          # 前端项目 (React + TypeScript)
+├── es-manage-service/      # 后端项目 (Spring Boot + Java)
+└── docs/                   # 项目文档
+```
 
 ## 技术栈
 
-- React 19 + TypeScript
-- Vite
-- Tailwind CSS
-- Ant Design 6
-- React Router 7
-- Recharts (图表)
-- Lucide React (图标)
-- Day.js (日期处理)
+### 前端 (es-manage-web)
+- **框架**: React 18 + TypeScript 5.x
+- **构建工具**: Vite
+- **UI 框架**: Ant Design 5.x + Tailwind CSS
+- **图表库**: ECharts
+- **路由**: React Router 6
 
-## 功能特性
+### 后端 (es-manage-service)
+- **框架**: Spring Boot 3.2
+- **语言**: Java 17
+- **构建工具**: Gradle
+- **HTTP 客户端**: OkHttp 4.x
 
-### 监控功能
-- **监控概览**: 集群整体健康状态、关键指标、资源使用趋势图
-- **集群信息**: 集群详细统计、节点分布、分片状态、资源使用、性能趋势
-- **节点管理**: 节点列表、节点详情页（CPU/内存/磁盘/JVM/线程池/断路器监控）
-- **索引列表**: 索引列表、统计信息、健康状态筛选
+## 快速开始
 
-### 管理功能
-- **索引管理**: 创建索引、别名管理、Ingest 管道、索引模板
-
-### 开发工具
-- **控制台**: 类似 Kibana Dev Tools，执行 ES REST API 请求
-- **分析器**: 测试分词器和分析器效果
-
-### 通用功能
-- **时间范围选择器**: 统一控制所有图表的时间范围（15分钟~7天）
-- **自定义时间范围**: 支持精确到秒的自定义时间选择
-- **自动刷新**: 可配置的自动刷新间隔
-
-## 数据结构
-
-基于 Elasticsearch 9.0 和 Metricbeat 的实际数据结构定义，包括：
-
-- `ClusterHealth` - 集群健康状态
-- `ClusterStats` - 集群统计信息
-- `NodeStats` - 节点统计信息
-- `IndexInfo` / `IndexStats` - 索引信息和统计
-- `MetricbeatEvent` - Metricbeat 事件结构
-
-## 开发
+### 前端开发
 
 ```bash
-# 安装依赖
+cd es-manage-web
 npm install
-
-# 启动开发服务器
 npm run dev
-
-# 构建生产版本
-npm run build
-
-# 预览生产版本
-npm run preview
+# 访问 http://localhost:5173
 ```
 
-## 目录结构
+### 后端开发
 
-```
-src/
-├── components/       # 通用组件
-│   ├── MetricChart.tsx      # 指标图表
-│   ├── StatsCard.tsx        # 统计卡片
-│   ├── StatusBadge.tsx      # 状态徽章
-│   └── TimeRangeSelector.tsx # 时间范围选择器
-├── constants/        # 常量配置
-├── layouts/          # 布局组件
-├── pages/            # 页面组件
-│   ├── Overview/     # 监控概览
-│   ├── Cluster/      # 集群信息
-│   ├── Nodes/        # 节点列表
-│   ├── NodeDetail/   # 节点详情
-│   ├── Indices/      # 索引列表
-│   ├── IndexDetail/  # 索引详情
-│   ├── IndexManage/  # 索引管理
-│   ├── DevTools/     # 开发者控制台
-│   └── Analyzer/     # 分析器测试
-├── services/         # API 服务层
-├── types/            # TypeScript 类型定义
-└── utils/            # 工具函数
+```bash
+cd es-manage-service
+./gradlew bootRun --console=plain
+# 服务运行在 http://localhost:8080
 ```
 
-## 后续扩展
+## 功能模块
 
-当前使用 localStorage Mock 数据，后续只需修改 `src/services/api.ts` 中的 API 调用，
-替换为实际的 Kibana/Elasticsearch API 即可无缝切换到真实数据。
+- **监控模块**: 集群概览、节点管理、索引监控
+- **告警模块**: 告警规则、告警记录、通知渠道
+- **审批模块**: 审批流程、申请管理
+- **操作流模块**: 自动化操作流程
+- **管理模块**: 索引管理、开发工具
 
-### 接入真实 ES 集群
+## 文档
 
-1. 修改 `src/services/api.ts` 中的 API 函数
-2. 配置 ES 集群地址和认证信息
-3. 处理 CORS 跨域问题（可通过代理或 ES 配置解决）
+详细文档请查看 `es-manage-web/docs/` 目录：
 
-### 示例 API 替换
+- [产品文档](es-manage-web/docs/产品文档.md) - 面向产品经理和用户
+- [开发文档](es-manage-web/docs/开发文档.md) - 面向开发人员
+- [技术委员会文档](es-manage-web/docs/技术委员会文档.md) - 面向技术决策者
 
-```typescript
-// 原 Mock 实现
-export async function fetchClusterHealth(): Promise<ClusterHealth> {
-  await simulateDelay();
-  return generateClusterHealth();
-}
+## 配置说明
 
-// 替换为真实 API
-export async function fetchClusterHealth(): Promise<ClusterHealth> {
-  const response = await axios.get(`${ES_BASE_URL}/_cluster/health`);
-  return response.data;
-}
+### Kibana 连接配置
+
+后端服务需要连接到 Kibana Monitoring API，请在 `es-manage-service/src/main/resources/application.yml` 中配置：
+
+```yaml
+kibana:
+  base-url: http://your-kibana-host:5601
+  username: your-username
+  password: your-password
+  cluster-id: your-cluster-id
 ```
+
+## 开发规范
+
+- 前端使用 TypeScript 严格模式
+- 组件使用函数式组件 + Hooks
+- 中文注释和界面
+- 遵循 Ant Design 设计规范
+- 后端 DTO 字段需要中文注释
+
+## 许可证
+
+MIT License
